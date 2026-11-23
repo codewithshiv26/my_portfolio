@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getCollection } from 'astro:content';
+
+const reports = (await getCollection('progress', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Progress Reports" description="A dated log of what I studied, built, tried and learned.">
+  <section class="page-section">
+    <h1>Progress Reports</h1>
+    <p class="muted">A running log of small steps, experiments and things learned.</p>
+    <PostList posts={reports} collection="progress" />
+  </section>
+</BaseLayout>

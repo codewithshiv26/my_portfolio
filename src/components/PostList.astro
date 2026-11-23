@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[] | CollectionEntry<'progress'>[];
+  collection: 'blog' | 'progress';
+  limit?: number;
+}
+
+const { posts, collection, limit } = Astro.props;
+const visiblePosts = typeof limit === 'number' ? posts.slice(0, limit) : posts;
+const basePath = collection === 'blog' ? '/blog' : '/progress-reports';
+---
+
+{visiblePosts.length > 0 ? (
+  <ul class="post-list">
+    {visiblePosts.map((post) => (
+      <li>
+        <a class="post-title" href={`${basePath}/${post.id}/`}>
+          {post.data.title}
+        </a>
+        <FormattedDate date={post.data.pubDate} />
+        {'dayRange' in post.data && (
+          <span class="post-day-range">Days {post.data.dayRange}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+) : (
+  <p class="muted">Nothing published here yet.</p>
+)}

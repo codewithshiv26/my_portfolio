@@ -1,0 +1,45 @@
+<button
+  class="theme-toggle"
+  type="button"
+  aria-label="Switch to light theme"
+  title="Switch theme"
+  data-theme-toggle
+>
+  <span data-theme-icon aria-hidden="true">◐</span>
+</button>
+
+<script>
+  const themeButton = document.querySelector<HTMLButtonElement>(
+    '[data-theme-toggle]'
+  );
+  const themeIcon = document.querySelector<HTMLSpanElement>(
+    '[data-theme-icon]'
+  );
+
+  function syncThemeControl() {
+    const isLight = document.documentElement.dataset.theme === 'light';
+
+    if (themeIcon) themeIcon.textContent = isLight ? '☾' : '◐';
+    themeButton?.setAttribute(
+      'aria-label',
+      isLight ? 'Switch to dark theme' : 'Switch to light theme'
+    );
+  }
+
+  syncThemeControl();
+
+  themeButton?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.dataset.theme ?? 'dark';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.dataset.theme = nextTheme;
+
+    try {
+      localStorage.setItem('theme', nextTheme);
+    } catch {
+      // The selected theme still applies for this page if storage is unavailable.
+    }
+
+    syncThemeControl();
+  });
+</script>

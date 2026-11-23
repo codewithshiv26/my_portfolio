@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const reports = (await getCollection('progress', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Shivam | Developer & Student"
+  description="A second-year B.Tech CSE (Data Science) student exploring backend development, IoT and software engineering."
+>
+  <section class="home-section">
+    <h1>Yo, I'm Shivam!</h1>
+
+    <p>Second-year B.Tech CSE (Data Science), figuring things out one build at a time.</p>
+
+    <p>I'm interested in backend development, IoT, programming and understanding how software works behind the scenes.</p>
+
+    <p>This is my corner of the internet to share what I'm learning, the projects I'm building and the ideas I find worth exploring.</p>
+
+    <p>Wanna exchange ideas? <a href="https://x.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer">DM me on X</a>.</p>
+  </section>
+
+  <section class="home-section">
+    <h2>Who am I?</h2>
+
+    <p>I'm a computer science student who enjoys exploring technology and figuring out how things work.</p>
+
+    <p>My current interests include backend development, data science, IoT and the fundamentals behind reliable software.</p>
+
+    <p>I learn best by building things, making mistakes, looking for better solutions and trying again.</p>
+
+    <p>This site is where I document that process — the useful discoveries, unfinished experiments and lessons along the way.</p>
+
+    <a class="read-more" href="/blog/who-am-i/">Read the post</a>
+  </section>
+
+  <section class="home-section">
+    <h2>Recent Posts</h2>
+    <PostList posts={posts} collection="blog" limit={4} />
+    <a class="see-all" href="/blog/">See all posts</a>
+  </section>
+
+  <section class="home-section">
+    <h2>Recent Progress Reports</h2>
+    <PostList posts={reports} collection="progress" limit={4} />
+    <a class="see-all" href="/progress-reports/">See all progress reports</a>
+  </section>
+</BaseLayout>

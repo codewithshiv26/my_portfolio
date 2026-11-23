@@ -1,0 +1,24 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header>
+    <div class="site-shell">
+        <div class="banner-frame">
+            <ascii-art
+                piece="tokyo-rain"
+                label="Tokyo street at night in the rain"
+            ></ascii-art>
+        </div>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <div class="nav-links">
+                <a href="/blog/">Blog</a>
+                <a href="/progress-reports/">Progress-Reports</a>
+                <a href="/about/">About</a>
+            </div>
+
+            <ThemeToggle />
+        </nav>
+    </div>
+</header>

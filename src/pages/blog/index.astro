@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Blog" description="Long-form posts, notes and things I've learned while building and studying.">
+  <section class="page-section">
+    <h1>Blog</h1>
+    <p class="muted">Notes, experiments, ideas and lessons from the learning process.</p>
+    <PostList posts={posts} collection="blog" />
+  </section>
+</BaseLayout>
